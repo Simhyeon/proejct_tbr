@@ -91,14 +91,14 @@ public class Dialogue : MonoBehaviour
     public void NextNode()
     {
 		var currentNode = OriginalData.Nodes[CurrentIndex];
-		if ( currentNode.goToId != null && currentNode.goToId != "") 
+		if ( currentNode.GoToId != null && currentNode.GoToId != "") 
 		{
-			Debug.Log("Next target is :" + currentNode.goToId);
-			if (!DataIndex.ContainsKey(currentNode.goToId))
+			Debug.Log("Next target is :" + currentNode.GoToId);
+			if (!DataIndex.ContainsKey(currentNode.GoToId))
 			{
 				Debug.LogError("Current dialogue does not have proper redirection to other node");
 			}
-			CurrentIndex = DataIndex[currentNode.goToId];
+			CurrentIndex = DataIndex[currentNode.GoToId];
 		}
 		else
 		{
