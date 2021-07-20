@@ -13,7 +13,15 @@ MonoBehaviour:
   m_Name: Demo
   m_EditorClassIdentifier: 
   Nodes:
-  - NodeType: 0
+  - Id: first
+    NodeType: 0
     Speaker: I'm speaker
     NodeText: I'm text node
     Selections: []
+    goToId: 
+  - Id: second
+    NodeType: 0
+    Speaker: I'm opponent
+    NodeText: I'm second text which will go to first
+    Selections: []
+    goToId: first
