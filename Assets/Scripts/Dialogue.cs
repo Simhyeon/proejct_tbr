@@ -9,7 +9,7 @@ public class Dialogue : MonoBehaviour
 	public static Dialogue Instance;
 	public DialogueData OriginalData;
 	public Dictionary<string, int> DataIndex;
-    private int CurrentIndex;
+    private int CurrentIndex = 0;
 	public GameObject DialogueBox;
 	private TMP_Text SpeakerText;
 	private TMP_Text ContentText;
@@ -77,9 +77,7 @@ public class Dialogue : MonoBehaviour
         switch (currentNode.NodeType)
         {
             case DNodeType.SELECTION:
-                // TODO 
-                // Trigger selection script's function with selection array
-                // argument
+				Selection.instance.TriggerSelection(currentNode);
                 break;
             default:
                 break;
@@ -91,7 +89,11 @@ public class Dialogue : MonoBehaviour
     public void NextNode()
     {
 		var currentNode = OriginalData.Nodes[CurrentIndex];
-		if ( currentNode.GoToId != null && currentNode.GoToId != "") 
+		if (currentNode.GoToId == "exit")
+		{
+			CurrentIndex = OriginalData.Nodes.Length;
+		}
+		else if ( currentNode.GoToId != null && currentNode.GoToId != "" && currentNode.GoToId.ToLower() != "null") 
 		{
 			Debug.Log("Next target is :" + currentNode.GoToId);
 			if (!DataIndex.ContainsKey(currentNode.GoToId))
@@ -130,5 +132,12 @@ public class Dialogue : MonoBehaviour
 		{
 			DisplayNode();
 		}
+	}
+
+	public void RedirectTo(string id)
+	{
+		CurrentIndex = DataIndex[id];
+		CheckNodeIndex();
+		NodeBehaviour();
 	}
 }

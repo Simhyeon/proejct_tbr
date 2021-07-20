@@ -14,3 +14,18 @@ public enum SystemType
 	INVENTORY,
 
 }
+
+[Serializable]
+public class DialogueBranch
+{
+	public SystemType TargetSystem;
+	public string Target;
+	public string Qualification;
+	public string GoToId;
+}
+
+[Serializable]
+public class SelectionBranch : DialogueBranch
+{
+	public string Text;
+}

@@ -12,20 +12,11 @@ public class DialogueData : ScriptableObject
 [Serializable]
 public class DialogueNode 
 {
-	public string Id;
-	public DNodeType NodeType;
-	public string Speaker;
-	public string NodeText;
-	public string[] Selections;
+	public string Id = null;
+	public DNodeType NodeType = DNodeType.TEXT;
+	public string Speaker = "";
+	public string NodeText = "";
+	public SelectionBranch[] Selections;
 	public DialogueBranch[] Branches;
-	public string GoToId;
-}
-
-[Serializable]
-public class DialogueBranch
-{
-	public SystemType TargetSystem;
-	public string Target;
-	public string Qualification;
-	public string GoToId;
+	public string GoToId = null;
 }

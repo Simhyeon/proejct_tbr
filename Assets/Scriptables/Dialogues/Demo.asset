@@ -13,15 +13,58 @@ MonoBehaviour:
   m_Name: Demo
   m_EditorClassIdentifier: 
   Nodes:
-  - Id: first
+  - Id: root
+    NodeType: 1
+    Speaker: Maha
+    NodeText: What do you want?
+    Selections:
+    - TargetSystem: 0
+      Target: NULL
+      Qualification: NULL
+      GoToId: 1
+      Text: I want apple
+    - TargetSystem: 0
+      Target: NULL
+      Qualification: NULL
+      GoToId: 2
+      Text: I want grape
+    - TargetSystem: 0
+      Target: NULL
+      Qualification: NULL
+      GoToId: 3
+      Text: I want banana
+    - TargetSystem: 0
+      Target: NULL
+      Qualification: NULL
+      GoToId: 4
+      Text: I want pear
+    Branches: []
+    GoToId: NULL
+  - Id: 1
     NodeType: 0
-    Speaker: I'm speaker
-    NodeText: I'm text node
+    Speaker: Me
+    NodeText: I want apple
     Selections: []
-    goToId: 
-  - Id: second
+    Branches: []
+    GoToId: exit
+  - Id: 2
     NodeType: 0
-    Speaker: I'm opponent
-    NodeText: I'm second text which will go to first
+    Speaker: Me
+    NodeText: I want grape
     Selections: []
-    goToId: first
+    Branches: []
+    GoToId: exit
+  - Id: 3
+    NodeType: 0
+    Speaker: Me
+    NodeText: I want banana
+    Selections: []
+    Branches: []
+    GoToId: exit
+  - Id: 4
+    NodeType: 0
+    Speaker: Me
+    NodeText: I want pear
+    Selections: []
+    Branches: []
+    GoToId: exit
