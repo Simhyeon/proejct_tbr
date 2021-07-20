@@ -1,13 +1,6 @@
 using System;
 using UnityEngine;
 
-[Serializable]
-public enum DNodeType
-{
-	TEXT,
-	SELECTION
-}
-
 [CreateAssetMenu(fileName = "DialogueData", menuName = "Project_TBR/DialogueData", order = 0)]
 public class DialogueData : ScriptableObject
 {
@@ -24,5 +17,15 @@ public class DialogueNode
 	public string Speaker;
 	public string NodeText;
 	public string[] Selections;
-	public string goToId;
+	public DialogueBranch[] Branches;
+	public string GoToId;
+}
+
+[Serializable]
+public class DialogueBranch
+{
+	public SystemType TargetSystem;
+	public string Target;
+	public string Qualification;
+	public string GoToId;
 }
