@@ -8,7 +8,8 @@ public class Dialogue : MonoBehaviour
 {
 	public static Dialogue Instance;
 	public DialogueData OriginalData;
-	public Dictionary<string, DialogueNode> Data;
+	public Dictionary<string, int> DataIndex;
+    private int CurrentIndex;
 	public GameObject DialogueBox;
 	private TMP_Text SpeakerText;
 	private TMP_Text ContentText;
@@ -33,14 +34,21 @@ public class Dialogue : MonoBehaviour
 		{
 			Debug.LogError("Dialogue system needs dialogue box gameobject to perform.");
 		}
+
+		// Initialization
+		DataIndex = new Dictionary<string, int>();
+
+		// Debug
+		UpdateData(OriginalData);
 	}
 
 	public void UpdateData(DialogueData data)
 	{
 		this.OriginalData = data;
-		foreach (var item in OriginalData.Nodes)
+		for(int i = 0; i < OriginalData.Nodes.Length; i++)
 		{
-			var id = item.Id;
+			var node = OriginalData.Nodes[i];
+			var id = node.Id;
 			if (id == "")
 			{
 				// This is some arbitrary process to create barely random id
@@ -48,7 +56,7 @@ public class Dialogue : MonoBehaviour
 				// it is sufficient.
 				id = Random.Range(0, 100) + "-" + Random.Range(0, 100);
 			}
-			Data.Add(id, item);
+			DataIndex.Add(id, i);
 		}
 	}
 
@@ -57,10 +65,16 @@ public class Dialogue : MonoBehaviour
 		DialogueBox.SetActive(true);
 		// First node is always root node of dialogue data which is the first
 		// node from Nodes
-		DialogueNode firstNode = OriginalData.Nodes[0];
-		SpeakerText.text = firstNode.Speaker;
-		ContentText.text = firstNode.NodeText;
-        switch (firstNode.NodeType)
+        CurrentIndex = 0;
+		NodeBehaviour();
+	}
+
+    private void DisplayNode()
+    {
+		var currentNode = OriginalData.Nodes[CurrentIndex];
+		SpeakerText.text = currentNode.Speaker;
+		ContentText.text = currentNode.NodeText;
+        switch (currentNode.NodeType)
         {
             case DNodeType.SELECTION:
                 // TODO 
@@ -70,5 +84,51 @@ public class Dialogue : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    // TODO
+    // Go to next node
+    public void NextNode()
+    {
+		var currentNode = OriginalData.Nodes[CurrentIndex];
+		if ( currentNode.goToId != null && currentNode.goToId != "") 
+		{
+			Debug.Log("Next target is :" + currentNode.goToId);
+			if (!DataIndex.ContainsKey(currentNode.goToId))
+			{
+				Debug.LogError("Current dialogue does not have proper redirection to other node");
+			}
+			CurrentIndex = DataIndex[currentNode.goToId];
+		}
+		else
+		{
+			CurrentIndex += 1;
+		}
+
+		CheckNodeIndex();
+		NodeBehaviour();
+    }
+
+	private void CheckNodeIndex()
+	{
+		if (CurrentIndex > OriginalData.Nodes.Length || CurrentIndex < 0)
+		{
+			Debug.LogError("Next node index is either, bigger than the length of given dialogue's length or smaller than 0");
+			Debug.LogError("Ndex node index is : " + CurrentIndex);
+		}
+	}
+
+	private void NodeBehaviour()
+	{
+		// End of dialogue
+		if (CurrentIndex == OriginalData.Nodes.Length)
+		{
+			// Hide dialoguebox
+			DialogueBox.SetActive(false);
+		}
+		else
+		{
+			DisplayNode();
+		}
 	}
 }
