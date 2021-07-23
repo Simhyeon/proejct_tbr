@@ -29,3 +29,11 @@ public class SelectionBranch : DialogueBranch
 {
 	public string Text;
 }
+
+[Serializable]
+public enum ItemType
+{
+	EQUIPPABLE,
+	CONSUMABLE,
+	MISC
+}

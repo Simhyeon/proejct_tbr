@@ -40,5 +40,7 @@ public class SelectionBox : MonoBehaviour
 
         // Send id(value) back to Dialogue system
         Dialogue.Instance.RedirectTo(id);
+
+        gameObject.SetActive(false);
     }
 }
