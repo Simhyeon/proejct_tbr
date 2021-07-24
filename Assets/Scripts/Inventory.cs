@@ -6,7 +6,7 @@ public class Inventory : MonoBehaviour
 {
     public static Inventory Instance;
     public GameObject InventoryObject;
-    public Dictionary<string, Item> InventoryData;
+    public Dictionary<string, ItemData> InventoryData;
 
     private void Awake() 
     {
@@ -15,20 +15,20 @@ public class Inventory : MonoBehaviour
         if (InventoryObject == null) { Debug.LogError("Invetory gameobject is empty"); }
     }
 
-    public void RemoveItem(Item item)
+    public void RemoveItem(ItemData item)
     {
         InventoryData.Add(item.name, item);
         UpdateInventory(item);
     }
 
-    public void AddItem(Item item)
+    public void AddItem(ItemData item)
     {
         InventoryData.Remove(item.name);
         UpdateInventory(item);
     }
 
     // TODO 
-    private void UpdateInventory(Item item)
+    private void UpdateInventory(ItemData item)
     {
 
     }

@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "DialogueData", menuName = "Project_TBR/DialogueData", order = 0)]
 public class DialogueData : ScriptableObject
 {
+	public string Id;
 	[SerializeField]
 	public DialogueNode[] Nodes;
 }

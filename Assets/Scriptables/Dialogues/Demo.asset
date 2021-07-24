@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 237d24e6ac8409a46b930e28b3a8e2af, type: 3}
   m_Name: Demo
   m_EditorClassIdentifier: 
+  Id: Debug
   Nodes:
   - Id: root
     NodeType: 1

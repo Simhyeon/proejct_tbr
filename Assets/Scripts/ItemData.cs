@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Item", menuName = "Project_TBR/Item", order = 0)]
-public class Item : ScriptableObject 
+public class ItemData : ScriptableObject 
 {
-    public string Name;
+    public string ItemName;
     public ItemType Type;
     public Texture2D Icon;
 }

@@ -37,3 +37,10 @@ public enum ItemType
 	CONSUMABLE,
 	MISC
 }
+
+[Serializable]
+public enum Variant
+{
+	PLUS,
+	MINUS
+}
