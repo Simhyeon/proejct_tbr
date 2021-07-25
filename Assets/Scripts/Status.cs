@@ -19,6 +19,7 @@ public class Status : MonoBehaviour
 		if (Instance == null) { Instance = this; }
 		else { Debug.LogError("Status system should not exist more than once"); }
         WarnInvalidObject();
+        Init();
 	}
 
     private void WarnInvalidObject()
@@ -28,6 +29,12 @@ public class Status : MonoBehaviour
         if (LogsObject == null) { Debug.LogError("Logs gameobject is empty"); }
     }
 
+	private void Init()
+	{
+        EquippedObject.Init();
+        StatsObject.Init();
+	}
+
     private void Start() 
     {
         // TODO + Debug
@@ -35,6 +42,7 @@ public class Status : MonoBehaviour
         // LoadGame();
         DebugStatus();
 
+		statusData.Equipped = new List<string>() { "TestItem1", "TestItem2", "TestItem3", "TestItem4", "TestItem5" };
         // Add equipped items one by one
         foreach (var item in statusData.Equipped)
         {
@@ -93,7 +101,8 @@ public class Status : MonoBehaviour
         if (variant == Variant.PLUS)
         {
             EquippedObject.Equip(itemName);
-        } else if (variant == Variant.MINUS)
+        } 
+        else if (variant == Variant.MINUS)
         {
             EquippedObject.Equip(itemName);
         }

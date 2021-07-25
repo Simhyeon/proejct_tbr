@@ -7,5 +7,7 @@ public class ItemData : ScriptableObject
 {
     public string ItemName;
     public ItemType Type;
+    public bool Stackable; 
+    // pubic int MaxStack;
     public Texture2D Icon;
 }
