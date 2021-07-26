@@ -2,8 +2,10 @@
 
 #### Not yet
 
-* [ ] Make status and inventory trigger
-* [ ] Make flow handler
+* [ ] Make status and inventory trigger UI
+* [ ] Location data
+* [ ] GameStart Handler
+* [ ] Default screen functionality script
 
 #### Complete
 
@@ -13,3 +15,4 @@
 * [x] Complete inventory system
   * [x] Make uncountable item
   * [x] Make countable item
+* [x] Default screen
