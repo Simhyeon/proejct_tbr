@@ -7,7 +7,7 @@ using TMPro;
 public class Dialogue : MonoBehaviour
 {
 	public static Dialogue Instance;
-	public DialogueData OriginalData;
+	private DialogueData originalData;
 	public Dictionary<string, int> DataIndex;
     private int CurrentIndex = 0;
 	public GameObject DialogueBox;
@@ -37,17 +37,19 @@ public class Dialogue : MonoBehaviour
 
 		// Initialization
 		DataIndex = new Dictionary<string, int>();
-
-		// Debug
-		UpdateData(OriginalData);
 	}
 
-	public void UpdateData(DialogueData data)
+	private void UpdateData(DialogueData data)
 	{
-		this.OriginalData = data;
-		for(int i = 0; i < OriginalData.Nodes.Length; i++)
+		if (originalData == data)
 		{
-			var node = OriginalData.Nodes[i];
+			Debug.LogError("Same dialogue data is assigned this is not intended behaviour.");
+			return;
+		}
+		originalData = data;
+		for(int i = 0; i < originalData.Nodes.Length; i++)
+		{
+			var node = originalData.Nodes[i];
 			var id = node.Id;
 			if (id == "")
 			{
@@ -60,8 +62,26 @@ public class Dialogue : MonoBehaviour
 		}
 	}
 
-	public void TriggerDialogue()
+	public void TriggerDialogue(string dialogueId)
 	{
+		// Update 
+		var dialogue = Database.Instance.GetDialogue(dialogueId);
+		UpdateData(dialogue);
+
+		// Trigger
+		DialogueBox.SetActive(true);
+		// First node is always root node of dialogue data which is the first
+		// node from Nodes
+        CurrentIndex = 0;
+		NodeBehaviour();
+	}
+
+	public void TriggerDialogue(DialogueData dialogue)
+	{
+		// Update
+		UpdateData(dialogue);
+
+		// Trigger
 		DialogueBox.SetActive(true);
 		// First node is always root node of dialogue data which is the first
 		// node from Nodes
@@ -71,7 +91,7 @@ public class Dialogue : MonoBehaviour
 
     private void DisplayNode()
     {
-		var currentNode = OriginalData.Nodes[CurrentIndex];
+		var currentNode = originalData.Nodes[CurrentIndex];
 		SpeakerText.text = currentNode.Speaker;
 		ContentText.text = currentNode.NodeText;
         switch (currentNode.NodeType)
@@ -86,12 +106,12 @@ public class Dialogue : MonoBehaviour
 
     // TODO
     // Go to next node
-    public void NextNode()
+    private void NextNode()
     {
-		var currentNode = OriginalData.Nodes[CurrentIndex];
+		var currentNode = originalData.Nodes[CurrentIndex];
 		if (currentNode.GoToId == "exit")
 		{
-			CurrentIndex = OriginalData.Nodes.Length;
+			CurrentIndex = originalData.Nodes.Length;
 		}
 		else if ( currentNode.GoToId != null && currentNode.GoToId != "" && currentNode.GoToId.ToLower() != "null") 
 		{
@@ -113,7 +133,7 @@ public class Dialogue : MonoBehaviour
 
 	private void CheckNodeIndex()
 	{
-		if (CurrentIndex > OriginalData.Nodes.Length || CurrentIndex < 0)
+		if (CurrentIndex > originalData.Nodes.Length || CurrentIndex < 0)
 		{
 			Debug.LogError("Next node index is either, bigger than the length of given dialogue's length or smaller than 0");
 			Debug.LogError("Ndex node index is : " + CurrentIndex);
@@ -123,7 +143,7 @@ public class Dialogue : MonoBehaviour
 	private void NodeBehaviour()
 	{
 		// End of dialogue
-		if (CurrentIndex == OriginalData.Nodes.Length)
+		if (CurrentIndex == originalData.Nodes.Length)
 		{
 			// Hide dialoguebox
 			DialogueBox.SetActive(false);
