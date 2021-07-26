@@ -116,20 +116,6 @@ public class Status : MonoBehaviour
     {
         LogsObject.AddNewLog(log);
     }
-
-    // IO methods
-    // Desc: Read from or write to a file
-    // TODO
-    public void SaveGame()
-    {
-
-    }
-
-    // TODO
-    public void LoadGame()
-    {
-
-    }
 }
 
 public enum StatType
@@ -154,13 +140,4 @@ public class PlayerStats
         { StatType.DEX, 0},
         { StatType.HEL, 0}
     };
-}
-
-// This class is for data save and loading
-[System.Serializable]
-public class PlayerStatusData
-{
-    public List<string> Logs = new List<string>();
-    public PlayerStats Stats = new PlayerStats();
-    public List<string> Equipped = new List<string>();
 }
