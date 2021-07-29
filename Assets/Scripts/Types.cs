@@ -47,25 +47,61 @@ public enum Variant
 }
 
 // This class is for data save and loading
-[System.Serializable]
+[Serializable]
 public class PlayerData
 {
     public PlayerStatusData StatusData;
     public Dictionary<string, LocationData> LocationMap;
 }
 
-[System.Serializable]
+[Serializable]
 public class LocationData
 {
-	public string LocationName {get; set;}
+	public string Name {get; set;}
 	// TODO 
 	// HMM this looks complicated
+	public LocationStatus Status {get; set;}
+
+	public List<NPC> NPCs {get; set;}
+	public List<Merchandise> Tradables {get; set;}
 }
 
-[System.Serializable]
+public class Merchandise
+{
+
+}
+
+[Serializable]
 public class PlayerStatusData
 {
     public List<string> Logs = new List<string>();
     public PlayerStats Stats = new PlayerStats();
     public List<string> Equipped = new List<string>();
+}
+
+public interface ITriggerTarget
+{
+	public bool Qualify(string qualification);
+}
+
+// This use reflection to check qualification
+[Serializable]
+public class Trigger
+{
+	public string Target {get; set;}
+	public string Qualification {get; set;}
+}
+
+[Serializable]
+public class Event
+{
+	public Trigger EventTrigger;
+	public DialogueData Dialogue;
+}
+
+public class NPC
+{
+	public string Name {get; set;}	
+	public Dictionary<Trigger, DialogueData> Dialogues {get; set;}
+	public NpcStatus Status {get; set;}
 }

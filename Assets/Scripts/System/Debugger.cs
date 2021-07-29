@@ -31,6 +31,10 @@ public class DebuggerEditor : Editor
 		{
 			debugger.RemoveItem();
 		}
+		if (GUILayout.Button("Save to file"))
+		{
+            
+		}
     }
 }
 
@@ -46,7 +50,7 @@ public class Debugger : MonoBehaviour
     // Functions
     public void ShowDialogue()
     {
-        Dialogue.Instance.TriggerDialogue(TargetDialogue);
+        DialogueSystem.Instance.TriggerDialogue(TargetDialogue);
     }
     public void ToggleStatus()
     {
@@ -58,11 +62,11 @@ public class Debugger : MonoBehaviour
     }
     public void AddItem()
     {
-        Inventory.Instance.AddItem(ItemName);
+        InventorySystem.Instance.AddItem(ItemName);
     }
 
     public void RemoveItem()
     {
-        Inventory.Instance.RemoveItem(ItemName);
+        InventorySystem.Instance.RemoveItem(ItemName);
     }
 }

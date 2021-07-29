@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class Dialogue : MonoBehaviour
+public class DialogueSystem : MonoBehaviour
 {
-	public static Dialogue Instance;
+	public static DialogueSystem Instance;
 	private DialogueData originalData;
 	public Dictionary<string, int> DataIndex;
     private int CurrentIndex = 0;
@@ -97,7 +97,7 @@ public class Dialogue : MonoBehaviour
         switch (currentNode.NodeType)
         {
             case DNodeType.SELECTION:
-				Selection.instance.TriggerSelection(currentNode);
+				SelectionSystem.instance.TriggerSelection(currentNode);
                 break;
             default:
                 break;

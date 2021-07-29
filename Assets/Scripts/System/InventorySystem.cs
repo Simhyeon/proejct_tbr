@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class InventorySystem : MonoBehaviour
 {
-    public static Inventory Instance;
+    public static InventorySystem Instance;
     public GameObject InventoryObject;
     public GameObject ItemPrefab;
     public Dictionary<string, List<ItemSlot>> InventoryData = new Dictionary<string, List<ItemSlot>>();

@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Selection : MonoBehaviour
+public class SelectionSystem : MonoBehaviour
 {
-    public static Selection instance;
+    public static SelectionSystem instance;
     public SelectionBox Box;
 
     private void Awake() {
