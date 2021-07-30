@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class LocationSystem : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static LocationSystem Instance;
+    public LocationData CurrentLocation;
+
+    private void Awake() 
     {
-        
+		if (Instance == null) { Instance = this; }
+		else { Debug.LogError("Location system should not exist more than once"); }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetLocation(string LocationName)
     {
         
     }

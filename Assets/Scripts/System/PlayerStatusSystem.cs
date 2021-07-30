@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Linq;
 
-public class PlayerStatusSystem : MonoBehaviour
+public class PlayerStatusSystem : MonoBehaviour, ITriggerTarget
 {
     private const int EquippableCount = 5;
     public static PlayerStatusSystem Instance;
@@ -115,6 +116,40 @@ public class PlayerStatusSystem : MonoBehaviour
     private void UpdateLog(string log)
     {
         LogsObject.AddNewLog(log);
+    }
+
+    // Interface methods
+
+    bool ITriggerTarget.Qualify(QualificationData qualification)
+    {
+        switch (qualification.Type.ToLower())
+        {
+            case "log":
+                // Didn't find a value in logs
+				if (statusData.Logs.SingleOrDefault(item => item == qualification.Content) == null) 
+                {
+                    return false;
+				} 
+                else { return true; }
+            case "equipped":
+                // Didn't find a value in equipped
+                if (statusData.Equipped.SingleOrDefault(item => item == qualification.Content) == null)
+                {
+                    return false;
+                }
+                else { return true;}
+            case "stat":
+                // Stat rules are followed as 
+                // +number
+                // =number
+                // -number
+                // String
+                break;
+            default:
+                break;
+        }
+
+        return false;
     }
 }
 

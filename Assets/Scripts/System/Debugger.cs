@@ -31,9 +31,13 @@ public class DebuggerEditor : Editor
 		{
 			debugger.RemoveItem();
 		}
-		if (GUILayout.Button("Save to file"))
+		if (GUILayout.Button("Add log"))
 		{
-            
+			debugger.AddLog();
+		}
+		if (GUILayout.Button("Trigger event"))
+		{
+            debugger.TriggerEvent();
 		}
     }
 }
@@ -42,7 +46,12 @@ public class Debugger : MonoBehaviour
 {
     [Header("Target data")]
     public DialogueData TargetDialogue;
+    [Header("Target event")]
+    public Event TargetEvent;
+    [Header("Target item")]
     public string ItemName;
+    [Header("Target Log")]
+    public string LogString;
     [Header("Target gameobjects")]
     public GameObject StatusObject;
     public GameObject InventoryObject;
@@ -68,5 +77,17 @@ public class Debugger : MonoBehaviour
     public void RemoveItem()
     {
         InventorySystem.Instance.RemoveItem(ItemName);
+    }
+
+    public void TriggerEvent()
+    {
+        var dialogue = TargetEvent.TriggerEvent();
+        if (dialogue == null) { Debug.Log("Didn't qualify"); }
+        else { DialogueSystem.Instance.TriggerDialogue(dialogue); }
+    }
+
+    public void AddLog()
+    {
+        PlayerStatusSystem.Instance.ChangeLog(LogString);
     }
 }

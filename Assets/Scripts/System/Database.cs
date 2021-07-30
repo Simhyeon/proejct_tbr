@@ -8,6 +8,7 @@ public class Database : MonoBehaviour
     public static Database Instance;
     public DialogueData[] Dialogues;
     public ItemData[] Items;
+    public LocationData[] Locations;
     private Dictionary<string, DialogueData> DialogueDB = new Dictionary<string, DialogueData>();
     private Dictionary<string, ItemData> ItemDB = new Dictionary<string, ItemData>();
 

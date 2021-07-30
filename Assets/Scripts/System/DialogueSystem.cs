@@ -106,7 +106,7 @@ public class DialogueSystem : MonoBehaviour
 
     // TODO
     // Go to next node
-    private void NextNode()
+    public void NextNode()
     {
 		var currentNode = originalData.Nodes[CurrentIndex];
 		if (currentNode.GoToId == "exit")

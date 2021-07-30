@@ -81,27 +81,45 @@ public class PlayerStatusData
 
 public interface ITriggerTarget
 {
-	public bool Qualify(string qualification);
+	bool Qualify(QualificationData qualification);
 }
 
 // This use reflection to check qualification
 [Serializable]
 public class Trigger
 {
-	public string Target {get; set;}
-	public string Qualification {get; set;}
+	public TriggerTargetData TargetData;
+	public QualificationData Qualification;
+
+	public bool IsTriggered()
+	{
+		return TargetData.CheckQualification(Qualification);
+	}
 }
 
 [Serializable]
 public class Event
 {
-	public Trigger EventTrigger;
+	public Trigger TargetTrigger;
 	public DialogueData Dialogue;
+
+	public DialogueData TriggerEvent()
+	{
+		if (TargetTrigger.IsTriggered())
+		{
+			return Dialogue;
+		}
+		else
+		{
+			return null;
+		}
+	}
 }
 
+[Serializable]
 public class NPC
 {
-	public string Name {get; set;}	
-	public Dictionary<Trigger, DialogueData> Dialogues {get; set;}
-	public NpcStatus Status {get; set;}
+	public string Name;
+	public Dictionary<Trigger, DialogueData> Dialogues;
+	public NpcStatus Status;
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventorySystem : MonoBehaviour
+public class InventorySystem : MonoBehaviour, ITriggerTarget
 {
     public static InventorySystem Instance;
     public GameObject InventoryObject;
@@ -62,5 +62,36 @@ public class InventorySystem : MonoBehaviour
 			Destroy(InventoryData[itemName][0].gameObject);
 			InventoryData[itemName].RemoveAt(0);
         }
+    }
+
+    bool ITriggerTarget.Qualify(QualificationData qualification)
+    {
+        switch (qualification.Type.ToLower())
+        {
+            case "has":
+				break;
+            case "hasnot":
+				break;
+			default:
+				break;
+        }
+        return false;
+    }
+
+    private bool checkItem(string content)
+    {
+        switch (content[0])
+        {
+            // Check stackable items
+			case '+':
+				break;
+			case '-':
+				break;
+            default:
+                // Check single item
+				break;
+        }
+
+        return false;
     }
 }
