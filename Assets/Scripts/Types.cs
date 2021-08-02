@@ -42,8 +42,8 @@ public enum ItemType
 [Serializable]
 public enum Variant
 {
-	PLUS,
-	MINUS
+	Positive,
+	Negative
 }
 
 // This class is for data save and loading
@@ -55,20 +55,10 @@ public class PlayerData
 }
 
 [Serializable]
-public class LocationData
-{
-	public string Name {get; set;}
-	// TODO 
-	// HMM this looks complicated
-	public LocationStatus Status {get; set;}
-
-	public List<NPC> NPCs {get; set;}
-	public List<Merchandise> Tradables {get; set;}
-}
-
 public class Merchandise
 {
-
+	public Trigger ItemTrigger;
+	public ItemData Data;
 }
 
 [Serializable]
@@ -79,9 +69,17 @@ public class PlayerStatusData
     public List<string> Equipped = new List<string>();
 }
 
+// This is an interface that can be targetted by the trigger class
 public interface ITriggerTarget
 {
 	bool Qualify(QualificationData qualification);
+}
+
+// THis is an interface that can be recovered to
+// e.g.  after dialogue end, IRecoverable can be recovered
+public interface IRecoverable
+{
+	void Recover();
 }
 
 // This use reflection to check qualification
@@ -100,10 +98,12 @@ public class Trigger
 [Serializable]
 public class Event
 {
+	// This only affects when multiple events are evaludated
+	public int Order;
 	public Trigger TargetTrigger;
 	public DialogueData Dialogue;
 
-	public DialogueData TriggerEvent()
+	public DialogueData GetTriggerable()
 	{
 		if (TargetTrigger.IsTriggered())
 		{
@@ -117,9 +117,9 @@ public class Event
 }
 
 [Serializable]
-public class NPC
+public class Npc
 {
-	public string Name;
-	public Dictionary<Trigger, DialogueData> Dialogues;
+	public string Name { get { return Data.NpcName; }}
+	public NpcData Data;
 	public NpcStatus Status;
 }

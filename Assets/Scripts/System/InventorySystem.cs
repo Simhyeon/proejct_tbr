@@ -69,27 +69,24 @@ public class InventorySystem : MonoBehaviour, ITriggerTarget
         switch (qualification.Type.ToLower())
         {
             case "has":
-				break;
+                return checkItem(Variant.Positive, qualification.Content);
             case "hasnot":
-				break;
+                return checkItem(Variant.Negative, qualification.Content);
 			default:
 				break;
         }
         return false;
     }
 
-    private bool checkItem(string content)
+    private bool checkItem(Variant variant, string content)
     {
-        switch (content[0])
+        if (variant == Variant.Positive)
         {
-            // Check stackable items
-			case '+':
-				break;
-			case '-':
-				break;
-            default:
-                // Check single item
-				break;
+            return InventoryData.ContainsKey(content);
+        }
+        else if (variant == Variant.Negative)
+        {
+            return !InventoryData.ContainsKey(content);
         }
 
         return false;

@@ -14,14 +14,18 @@ public class TriggerTargetData : ScriptableObject
         switch (Target)
         {
             case TriggerTarget.PlayerStatusSystem:
-                return PlayerStatusSystem.Instance.GetComponent<ITriggerTarget>().Qualify(qualification);
+                Debug.Log("Check player status");
+                return ((ITriggerTarget)PlayerStatusSystem.Instance).Qualify(qualification);
             case TriggerTarget.LocationSystem:
+                Debug.Log("Check location status");
 				break;
             case TriggerTarget.InventorySystem:
-				break;
+                Debug.Log("Check inventory");
+                return ((ITriggerTarget)InventorySystem.Instance).Qualify(qualification);
             default:
 				break;
         }
+        Debug.Log("Return false");
         return false;
     }
 }

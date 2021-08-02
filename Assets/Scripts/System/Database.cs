@@ -5,12 +5,20 @@ using System.Linq;
 
 public class Database : MonoBehaviour
 {
+    // There are files referenced from an editor.
     public static Database Instance;
     public DialogueData[] Dialogues;
     public ItemData[] Items;
     public LocationData[] Locations;
-    private Dictionary<string, DialogueData> DialogueDB = new Dictionary<string, DialogueData>();
-    private Dictionary<string, ItemData> ItemDB = new Dictionary<string, ItemData>();
+    public NpcData[] Npcs;
+
+    // THis is status file read from a desginated save file
+    private Dictionary<string, DialogueData> dialogueDB = new Dictionary<string, DialogueData>();
+    private Dictionary<string, ItemData> itemDB = new Dictionary<string, ItemData>();
+    private Dictionary<string, LocationData> locationDB = new Dictionary<string, LocationData>();
+    private Dictionary<string,LocationStatus> locationStatuses = new Dictionary<string, LocationStatus>();
+    private Dictionary<string,NpcData> npcDB = new Dictionary<string, NpcData>();
+    private Dictionary<string,NpcStatus> npcStatuses = new Dictionary<string, NpcStatus>();
 
     private void Awake() 
     {
@@ -19,22 +27,62 @@ public class Database : MonoBehaviour
 
         foreach (var item in Dialogues)
         {
-            DialogueDB.Add(item.Id, item);
+            dialogueDB.Add(item.Id, item);
         }
 
         foreach (var item in Items)
         {
-            ItemDB.Add(item.ItemName, item);
+            itemDB.Add(item.ItemName, item);
         }
+
+        foreach (var item in Locations)
+        {
+            locationDB.Add(item.LocationName, item);
+        }
+
+        foreach (var npc in Npcs)
+        {
+            npcDB.Add(npc.NpcName, npc);
+        }
+    }
+
+    public void ReadStatusfile()
+    {
+
+    }
+
+    public void SaveStatus()
+    {
+
     }
 
     public DialogueData GetDialogue(string id)
     {
-        return DialogueDB[id];
+        return dialogueDB[id];
     }
 
     public ItemData GetItem(string name)
     {
-        return ItemDB[name];
+        return itemDB[name];
+    }
+
+    public LocationData GetLocation(string name) 
+    {
+        return locationDB[name];
+    }
+
+    public LocationStatus GetLocationStatus(string name) 
+    {
+        return locationStatuses[name];
+    }
+
+    public NpcData GetNpc(string name) 
+    {
+        return npcDB[name];
+    }
+
+    public NpcStatus GeNpcStatus(string name) 
+    {
+        return npcStatuses[name];
     }
 }

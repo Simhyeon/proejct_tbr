@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74bf7b7ac63ac26419ef2d3956acfe47, type: 3}
+  m_Name: Demo npc
+  m_EditorClassIdentifier: 
+  NpcName: Demonic
+  IsDefault: 1
+  NpcTrigger:
+    TargetData: {fileID: 0}
+    Qualification: {fileID: 0}
+  DefaultDialogue: {fileID: 11400000, guid: fdb68865f6ff4f0409c81c2fcddc72e2, type: 2}
+  Events:
+  - Order: -1
+    TargetTrigger:
+      TargetData: {fileID: 11400000, guid: 6b00016236bf7d545bcd9fb7b0ebbfc7, type: 2}
+      Qualification: {fileID: 11400000, guid: ab8dd4795ebed184cb30a5036da707dd, type: 2}
+    Dialogue: {fileID: 11400000, guid: b05bff9cc6fafff458096f5204ade027, type: 2}
+  - Order: -2
+    TargetTrigger:
+      TargetData: {fileID: 11400000, guid: 6b00016236bf7d545bcd9fb7b0ebbfc7, type: 2}
+      Qualification: {fileID: 11400000, guid: efd5961187a3a044c9232a8eb5b8d4ee, type: 2}
+    Dialogue: {fileID: 11400000, guid: 38060cee7eeade144a4dd7edc5b89068, type: 2}

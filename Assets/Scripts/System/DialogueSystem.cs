@@ -10,9 +10,9 @@ public class DialogueSystem : MonoBehaviour
 	private DialogueData originalData;
 	public Dictionary<string, int> DataIndex;
     private int CurrentIndex = 0;
-	public GameObject DialogueBox;
-	private TMP_Text SpeakerText;
-	private TMP_Text ContentText;
+	public UIDialogueHandler DialogueBox;
+
+	public IRecoverable RecoverTarget;
 
 	private void Awake()
 	{
@@ -23,16 +23,6 @@ public class DialogueSystem : MonoBehaviour
 		else
 		{
 			Debug.LogError("Dialogue system should not exist more than once");
-		}
-		if (DialogueBox != null)
-		{
-			// There should be two texts under
-			SpeakerText = DialogueBox.GetComponentsInChildren<TMP_Text>()[0];
-			ContentText = DialogueBox.GetComponentsInChildren<TMP_Text>()[1];
-		}
-		else
-		{
-			Debug.LogError("Dialogue system needs dialogue box gameobject to perform.");
 		}
 
 		// Initialization
@@ -47,6 +37,7 @@ public class DialogueSystem : MonoBehaviour
 			return;
 		}
 		originalData = data;
+		DataIndex = new Dictionary<string, int>();
 		for(int i = 0; i < originalData.Nodes.Length; i++)
 		{
 			var node = originalData.Nodes[i];
@@ -69,20 +60,21 @@ public class DialogueSystem : MonoBehaviour
 		UpdateData(dialogue);
 
 		// Trigger
-		DialogueBox.SetActive(true);
+		DialogueBox.gameObject.SetActive(true);
 		// First node is always root node of dialogue data which is the first
 		// node from Nodes
         CurrentIndex = 0;
 		NodeBehaviour();
 	}
 
-	public void TriggerDialogue(DialogueData dialogue)
+	public void TriggerDialogue(DialogueData dialogue, IRecoverable recoverTarget)
 	{
 		// Update
 		UpdateData(dialogue);
 
 		// Trigger
-		DialogueBox.SetActive(true);
+		DialogueBox.gameObject.SetActive(true);
+		RecoverTarget = recoverTarget;
 		// First node is always root node of dialogue data which is the first
 		// node from Nodes
         CurrentIndex = 0;
@@ -92,8 +84,7 @@ public class DialogueSystem : MonoBehaviour
     private void DisplayNode()
     {
 		var currentNode = originalData.Nodes[CurrentIndex];
-		SpeakerText.text = currentNode.Speaker;
-		ContentText.text = currentNode.NodeText;
+		DialogueBox.SetNode(currentNode);
         switch (currentNode.NodeType)
         {
             case DNodeType.SELECTION:
@@ -145,13 +136,20 @@ public class DialogueSystem : MonoBehaviour
 		// End of dialogue
 		if (CurrentIndex == originalData.Nodes.Length)
 		{
-			// Hide dialoguebox
-			DialogueBox.SetActive(false);
+			EndDialogue();
 		}
 		else
 		{
+			// Display node content into ui dialogue box
 			DisplayNode();
 		}
+	}
+
+	private void EndDialogue()
+	{
+		// Hide dialoguebox
+		DialogueBox.gameObject.SetActive(false);
+		RecoverTarget.Recover();
 	}
 
 	public void RedirectTo(string id)

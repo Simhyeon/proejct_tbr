@@ -47,7 +47,7 @@ public class PlayerStatusSystem : MonoBehaviour, ITriggerTarget
         // Add equipped items one by one
         foreach (var item in statusData.Equipped)
         {
-            UpdateEquippedItems(Variant.PLUS, item);
+            UpdateEquippedItems(Variant.Positive, item);
         }
 
         // Add log items one by one
@@ -70,11 +70,11 @@ public class PlayerStatusSystem : MonoBehaviour, ITriggerTarget
     // TODO
 	public void ChangeEquipment(Variant variant,string itemName)
 	{
-        if (variant == Variant.PLUS) 
+        if (variant == Variant.Positive) 
         {
 			var newItem = Database.Instance.GetItem(itemName);
 			statusData.Equipped.Add(itemName);
-        } else if (variant == Variant.MINUS)
+        } else if (variant == Variant.Negative)
         {
             statusData.Equipped.Remove(itemName);
         }
@@ -99,11 +99,11 @@ public class PlayerStatusSystem : MonoBehaviour, ITriggerTarget
     // Desc : Update ui components according to data
     private void UpdateEquippedItems(Variant variant, string itemName)
     {
-        if (variant == Variant.PLUS)
+        if (variant == Variant.Positive)
         {
             EquippedObject.Equip(itemName);
         } 
-        else if (variant == Variant.MINUS)
+        else if (variant == Variant.Negative)
         {
             EquippedObject.Equip(itemName);
         }
@@ -125,6 +125,7 @@ public class PlayerStatusSystem : MonoBehaviour, ITriggerTarget
         switch (qualification.Type.ToLower())
         {
             case "log":
+                Debug.Log("Check logs");
                 // Didn't find a value in logs
 				if (statusData.Logs.SingleOrDefault(item => item == qualification.Content) == null) 
                 {
@@ -133,6 +134,7 @@ public class PlayerStatusSystem : MonoBehaviour, ITriggerTarget
                 else { return true; }
             case "equipped":
                 // Didn't find a value in equipped
+                Debug.Log("Check equippment");
                 if (statusData.Equipped.SingleOrDefault(item => item == qualification.Content) == null)
                 {
                     return false;

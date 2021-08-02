@@ -11,6 +11,10 @@ public class DebuggerEditor : Editor
 		base.OnInspectorGUI();
 
 		Debugger debugger = (Debugger)target;
+		if (GUILayout.Button("Set location"))
+		{
+			debugger.SetLocation();
+		}
 		if (GUILayout.Button("Trigger dialogue"))
 		{
 			debugger.ShowDialogue();
@@ -42,8 +46,10 @@ public class DebuggerEditor : Editor
     }
 }
 
-public class Debugger : MonoBehaviour
+public class Debugger : MonoBehaviour, IRecoverable
 {
+    [Header("Target Location")]
+    public LocationData TargetLocation;
     [Header("Target data")]
     public DialogueData TargetDialogue;
     [Header("Target event")]
@@ -59,7 +65,7 @@ public class Debugger : MonoBehaviour
     // Functions
     public void ShowDialogue()
     {
-        DialogueSystem.Instance.TriggerDialogue(TargetDialogue);
+        DialogueSystem.Instance.TriggerDialogue(TargetDialogue, this);
     }
     public void ToggleStatus()
     {
@@ -81,13 +87,23 @@ public class Debugger : MonoBehaviour
 
     public void TriggerEvent()
     {
-        var dialogue = TargetEvent.TriggerEvent();
+        var dialogue = TargetEvent.GetTriggerable();
         if (dialogue == null) { Debug.Log("Didn't qualify"); }
-        else { DialogueSystem.Instance.TriggerDialogue(dialogue); }
+        else { DialogueSystem.Instance.TriggerDialogue(dialogue, this); }
     }
 
     public void AddLog()
     {
         PlayerStatusSystem.Instance.ChangeLog(LogString);
+    }
+
+    public void SetLocation()
+    {
+        LocationSystem.Instance.SetLocation(TargetLocation);
+    }
+
+    void IRecoverable.Recover()
+    {
+        // Don't do anything because this is simply a debugging script.
     }
 }

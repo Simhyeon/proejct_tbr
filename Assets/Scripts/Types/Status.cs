@@ -13,7 +13,7 @@ public class CharcterStatus : StatusBase
 
 public class NpcStatus : CharcterStatus
 {
-
+	public List<string> ConsumedDialogues;
 }
 
 public class PlayerStatus : CharcterStatus
@@ -23,6 +23,5 @@ public class PlayerStatus : CharcterStatus
 
 public class LocationStatus : StatusBase
 {
-	public Dictionary<string, ItemData> Merchandise {get; set;}
-	// public List<Trigger, Yatti> Yatta {get; set;}
+	// Exploration factor
 }
